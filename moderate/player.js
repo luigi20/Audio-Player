@@ -3,16 +3,28 @@ window.player = {
     title: document.querySelector('.card-content h5'),
     artist: document.querySelector('.card-content p'),
     audio: document.querySelector('audio'),
-    data: {
-        title: "Como comecei a programar / Por que criamos a Rocketseat / Nossa Stack",
-        artist: "Diego Fernandes",
-        cover: "files/como-comecei.jpg",
-        file: "files/como-comecei.mp3"
-    },
+    audioData: audios,
+    currentAudio: {},
+    currentPlaying: 0,
     start() {
-        this.cover.style.background = `url('${this.data.cover}') no-repeat  center center / cover`;
-        this.title.innerText = this.data.title;
-        this.artist.innerText = this.data.artist;
-        this.audio.src = this.data.file;
+        this.update();
+        this.audio.onended = () => this.next();
+    },
+    next() {
+        this.currentPlaying++;
+        if (this.currentPlaying == this.audioData.length) return this.restart();
+        this.update();
+    },
+    update() {
+        this.currentAudio = this.audioData[this.currentPlaying];
+        this.cover.style.background = `url('${path(this.currentAudio.cover)}') no-repeat  center center / cover`;
+        this.title.innerText = this.currentAudio.title;
+        this.artist.innerText = this.currentAudio.artist;
+        this.audio.src = path(this.currentAudio.file);
+    },
+    restart() {
+        this.currentPlaying = 0;
+        this.update();
     }
 }
+
