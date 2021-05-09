@@ -13,3 +13,4 @@ cover.style.background = `url('${data.cover}') no-repeat  center center / cover`
 title.innerText = data.title;
 artist.innerText = data.artist;
 audio.src = data.file;
+
